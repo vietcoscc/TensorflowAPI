@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.Person;
 import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
 import com.example.demo.model.RectF;
@@ -9,12 +8,9 @@ import com.google.gson.Gson;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -24,10 +20,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 @RestController
 public class Controller implements InitializingBean {
@@ -42,11 +35,12 @@ public class Controller implements InitializingBean {
 
     @PostMapping(value = "/tensorflow")
     public String tensorflow(@RequestBody String image) throws Exception {
+        System.out.println(image);
+
         if (image.isEmpty()) {
             return null;
         }
-
-        byte originalImageByte[] = Base64Utils.decodeFromString(image);
+        byte originalImageByte[] = org.apache.tomcat.util.codec.binary.Base64.decodeBase64(image);
 
         InputStream inputStream = new ByteArrayInputStream(originalImageByte);
 
@@ -77,14 +71,14 @@ public class Controller implements InitializingBean {
         return gson.toJson(results);
     }
 
-    @PostMapping("/object")
-    public String object(@RequestParam("person") Person person) {
-        Gson gson = new Gson();
-        return gson.toJson(person);
-    }
-
-    @PostMapping("/file")
-    public String file(@RequestParam(value = "file") MultipartFile file) throws Exception {
+//    @PostMapping("/object")
+//    public String object(@RequestParam("person") Person person) {
+//        Gson gson = new Gson();
+//        return gson.toJson(person);
+//    }
+//
+//    @PostMapping("/file")
+//    public String file(@RequestParam(value = "file") MultipartFile file) throws Exception {
 //        if (file.getContentType().contains("video")) {
 //            byte b[] = file.getBytes();
 //            InputStream inputStream = new ByteArrayInputStream(b);
@@ -95,14 +89,14 @@ public class Controller implements InitializingBean {
 //            outputStream.flush();
 //            outputStream.close();
 //        }
-        return file.getContentType();
-    }
-
-    @PostMapping(value = "/")
-    public String index(@RequestParam(value = "aa") String a) {
-        return a;
-    }
-
+//        return file.getContentType();
+//    }
+//
+//    @PostMapping(value = "/")
+//    public String index(@RequestParam(value = "aa") String a) {
+//        return a;
+//    }
+//
 
     @Override
     public void afterPropertiesSet() throws Exception {
