@@ -2,16 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
-import com.example.demo.model.Contour;
-import com.example.demo.model.RectF;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
 import org.bytedeco.javacpp.tesseract;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,10 +18,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Base64;
 import java.util.List;
-
-import static com.example.demo.Utils.*;
+import java.util.Vector;
 
 @RestController
 public class Controller implements InitializingBean {

@@ -14,9 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import org.tensorflow.Graph;
-import sun.plugin.dom.css.Rect;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
