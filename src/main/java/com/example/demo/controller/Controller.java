@@ -5,8 +5,13 @@ import com.example.demo.model.Classifier;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,7 +32,7 @@ public class Controller implements InitializingBean {
     public static final String LABEL_NAME = "coco_labels_list.txt";
     public static final int INPUT_SIZE = 300;
 
-    private String resourcePath = getClass().getClassLoader().getResource("").getPath();
+    private String resourcePath = getClass().getClassLoader().getResource("").getPath() + "static/";
     private byte[] model;
     private Vector<String> label;
     private TensorFlowObjectDetectionAPIModel apiModel;
@@ -35,6 +40,7 @@ public class Controller implements InitializingBean {
 
     @PostMapping(value = "/tensorflow")
     public String tensorflow(@RequestBody String image) throws Exception {
+
         image = image.replace("\"", "");
         image = image.replace("\\n", "");
         System.out.println(image);
@@ -105,19 +111,23 @@ public class Controller implements InitializingBean {
         return gson.toJson(result);
     }
 
-    @GetMapping(value = "/{id}")
-    public String get(@PathVariable("id") String param) {
-        return param;
-    }
+//    @GetMapping(value = "/{id}")
+//    public String get(@PathVariable("id") String param) {
+//        return param;
+//    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Path modelPath = Paths.get(resourcePath, MODEL_NAME);
-        Path labelPath = Paths.get(resourcePath, LABEL_NAME);
-        System.out.println(modelPath);
-        System.out.println(labelPath);
+
+        ClassPathResource m = new ClassPathResource("static/" + MODEL_NAME);
+        ClassPathResource l = new ClassPathResource("static/" + LABEL_NAME);
+        Path modelPath = Paths.get(m.getURI());
+        Path labelPath = Paths.get(l.getURI());
+//        System.out.println(m.getURI());
+//        System.out.println(l.getPath());
         model = Files.readAllBytes(modelPath);
         label = new Vector<>(Files.readAllLines(labelPath));
         apiModel = TensorFlowObjectDetectionAPIModel.create(model, label, INPUT_SIZE);
     }
+
 }
