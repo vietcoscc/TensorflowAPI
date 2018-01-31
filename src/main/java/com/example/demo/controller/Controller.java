@@ -27,7 +27,7 @@ public class Controller implements InitializingBean {
     public static final String LABEL_NAME = "coco_labels_list.txt";
     public static final int INPUT_SIZE = 300;
 
-    private String resourcePath = getClass().getClassLoader().getResource("").getPath() + "static/";
+    private String resourcePath = getClass().getClassLoader().getResource("").getPath();
     private byte[] model;
     private Vector<String> label;
     private TensorFlowObjectDetectionAPIModel apiModel;
