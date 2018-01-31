@@ -4,8 +4,11 @@ import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -17,10 +20,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Base64;
 import java.util.List;
 import java.util.Vector;
@@ -31,7 +34,7 @@ public class Controller implements InitializingBean {
     public static final String LABEL_NAME = "coco_labels_list.txt";
     public static final int INPUT_SIZE = 300;
 
-    private String resourcePath = getClass().getClassLoader().getResource("").getPath() + "static/";
+    private String resourcePath = getClass().getClassLoader().getResource("").getPath()+ "static/";
     private byte[] model;
     private Vector<String> label;
     private TensorFlowObjectDetectionAPIModel apiModel;
@@ -120,13 +123,24 @@ public class Controller implements InitializingBean {
 
         ClassPathResource m = new ClassPathResource("static/" + MODEL_NAME);
         ClassPathResource l = new ClassPathResource("static/" + LABEL_NAME);
-        Path modelPath = Paths.get(m.getURI());
-        Path labelPath = Paths.get(l.getURI());
 
-        System.out.println(m.getURI());
-        System.out.println(l.getURI());
-//        model = Files.readAllBytes(modelPath);
-        m.getInputStream().read(model);
+//        Path modelPath = Paths.get(resourcePath, MODEL_NAME);
+//        Path labelPath = Paths.get(resourcePath, LABEL_NAME);
+
+//        System.out.println(m.getURI());
+//        System.out.println(l.getURI());
+//        System.out.println(modelPath);
+//        System.out.println(labelPath);
+
+
+//        m.getInputStream().read(model);
+        File modelFile = ResourceUtils.getFile(getClass().getClassLoader().getResource("static/" + MODEL_NAME).getFile());
+        File labelFile = ResourceUtils.getFile(getClass().getClassLoader().getResource("static/" + LABEL_NAME).getFile());
+        System.out.println(modelFile.getPath());
+        System.out.println(labelFile.getPath());
+        Path modelPath = Paths.get(modelFile.toURI());
+        Path labelPath = Paths.get(labelFile.toURI());
+        model = Files.readAllBytes(modelPath);
         label = new Vector<>(Files.readAllLines(labelPath));
         apiModel = TensorFlowObjectDetectionAPIModel.create(model, label, INPUT_SIZE);
     }
