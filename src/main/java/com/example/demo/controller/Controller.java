@@ -4,7 +4,6 @@ import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
-import org.bytedeco.javacpp.tesseract;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +31,7 @@ public class Controller implements InitializingBean {
     private byte[] model;
     private Vector<String> label;
     private TensorFlowObjectDetectionAPIModel apiModel;
-    private tesseract.TessBaseAPI tessBaseAPI = new tesseract.TessBaseAPI();
+//    private tesseract.TessBaseAPI tessBaseAPI = new tesseract.TessBaseAPI();
 
     @PostMapping(value = "/tensorflow")
     public String tensorflow(@RequestBody String image) throws Exception {
