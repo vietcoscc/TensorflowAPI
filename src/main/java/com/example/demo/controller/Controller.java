@@ -4,6 +4,7 @@ import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import sun.misc.IOUtils;
+import sun.nio.ch.IOUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,9 +22,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Base64;
 import java.util.List;
 import java.util.Vector;
@@ -123,9 +124,11 @@ public class Controller implements InitializingBean {
         ClassPathResource l = new ClassPathResource("static/" + LABEL_NAME);
         Path modelPath = Paths.get(m.getURI());
         Path labelPath = Paths.get(l.getURI());
-//        System.out.println(m.getURI());
-//        System.out.println(l.getPath());
-        model = Files.readAllBytes(modelPath);
+
+        System.out.println(m.getURI());
+        System.out.println(l.getURI());
+//        model = Files.readAllBytes(modelPath);
+        m.getInputStream().read(model);
         label = new Vector<>(Files.readAllLines(labelPath));
         apiModel = TensorFlowObjectDetectionAPIModel.create(model, label, INPUT_SIZE);
     }
