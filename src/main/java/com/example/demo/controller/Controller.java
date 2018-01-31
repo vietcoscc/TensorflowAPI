@@ -120,7 +120,7 @@ public class Controller implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
+        System.out.println(resourcePath);
         ClassPathResource m = new ClassPathResource("static/" + MODEL_NAME);
         ClassPathResource l = new ClassPathResource("static/" + LABEL_NAME);
 
