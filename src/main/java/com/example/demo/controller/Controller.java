@@ -114,7 +114,8 @@ public class Controller implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         Path modelPath = Paths.get(resourcePath, MODEL_NAME);
         Path labelPath = Paths.get(resourcePath, LABEL_NAME);
-
+        System.out.println(modelPath);
+        System.out.println(labelPath);
         model = Files.readAllBytes(modelPath);
         label = new Vector<>(Files.readAllLines(labelPath));
         apiModel = TensorFlowObjectDetectionAPIModel.create(model, label, INPUT_SIZE);
