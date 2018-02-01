@@ -53,7 +53,7 @@ public class Controller implements InitializingBean {
         System.out.println(resized.getWidth()+","+resized.getHeight());
         byte resizedImageByte[] = ((DataBufferByte) resized.getRaster().getDataBuffer()).getData();
         System.out.println(resizedImageByte.length + "");
-        List<Classifier.Recognition> results = apiModel.recognizeImage(resizedImageByte);
+        List<Classifier.Recognition> results = apiModel.recognizeImage(originalImageByte);
         Gson gson = new Gson();
         return gson.toJson(results);
     }
