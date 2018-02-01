@@ -1,6 +1,7 @@
 package com.example.demo;
 
 
+import com.example.demo.model.RectF;
 import net.coobird.thumbnailator.Thumbnails;
 
 import java.awt.*;
@@ -45,21 +46,21 @@ public class Utils {
 //    }
 //
 //
-//    public static Rectangle rectF2Rectangle(RectF rectF) {
-//        return new Rectangle((int) rectF.left, (int) rectF.top, (int) (rectF.right - rectF.left), (int) (rectF.bottom - rectF.top));
-//    }
+    public static Rectangle rectF2Rectangle(RectF rectF) {
+        return new Rectangle((int) rectF.left, (int) rectF.top, (int) (rectF.right - rectF.left), (int) (rectF.bottom - rectF.top));
+    }
 //
-//    public static RectF resized2original(BufferedImage resized, BufferedImage original, RectF rectF) {
-//        Rectangle rectangle = Utils.rectF2Rectangle(rectF);
-//        float w = original.getWidth() * 1.0f / resized.getWidth();
-//        float h = original.getHeight() * 1.0f / resized.getHeight();
-//
-//        float x = (rectangle.x * w);
-//        float y = (rectangle.y * h);
-//        float width = (rectangle.width * w);
-//        float height = (rectangle.height * h);
-//        return new RectF(x, y, x + width, y + height);
-//    }
+    public static RectF resized2original(BufferedImage resized, BufferedImage original, RectF rectF) {
+        Rectangle rectangle = Utils.rectF2Rectangle(rectF);
+        float w = original.getWidth() * 1.0f / resized.getWidth();
+        float h = original.getHeight() * 1.0f / resized.getHeight();
+
+        float x = (rectangle.x * w);
+        float y = (rectangle.y * h);
+        float width = (rectangle.width * w);
+        float height = (rectangle.height * h);
+        return new RectF(x, y, x + width, y + height);
+    }
 //
 //    public static void copyMakeBorder(Mat mat, int strokeWidth) {
 //        Point topLeft = new org.opencv.core.Point(0, 0);
