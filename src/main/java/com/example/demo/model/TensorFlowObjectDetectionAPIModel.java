@@ -35,7 +35,7 @@ public class TensorFlowObjectDetectionAPIModel implements Classifier {
     private int inputSize;
 
     // Pre-allocated buffers.
-    private Vector<String> labels = new Vector<String>();
+    private List<String> labels = new Vector<String>();
 
     private float[] outputLocations;
     private float[] outputScores;
@@ -46,7 +46,7 @@ public class TensorFlowObjectDetectionAPIModel implements Classifier {
     private TensorFlowInferenceJavaInterface inferenceInterface;
 
 
-    public static TensorFlowObjectDetectionAPIModel create(byte graphDef[], Vector<String> labels, int inputSize) throws Exception {
+    public static TensorFlowObjectDetectionAPIModel create(byte graphDef[], List<String> labels, int inputSize) throws Exception {
 
 
         final TensorFlowObjectDetectionAPIModel d = new TensorFlowObjectDetectionAPIModel();
