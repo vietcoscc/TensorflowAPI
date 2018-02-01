@@ -4,7 +4,6 @@ import com.example.demo.Utils;
 import com.example.demo.model.Classifier;
 import com.example.demo.model.TensorFlowObjectDetectionAPIModel;
 import com.google.gson.Gson;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +16,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.util.Base64;
 import java.util.List;
@@ -122,7 +118,7 @@ public class Controller implements InitializingBean {
         URL modelUrl = new URL("https://github.com/vietcoscc/TensorflowAPI/raw/master/src/main/resources/static/ssd_mobilenet_v1_android_export.pb");
         URL labelUrl = new URL("https://raw.githubusercontent.com/vietcoscc/TensorflowAPI/master/src/main/resources/static/coco_labels_list.txt");
         InputStream modelStream = modelUrl.openStream();
-        ByteOutputStream outputStream = new ByteOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         StreamUtils.copy(modelStream, outputStream);
         model = outputStream.toByteArray();
 
