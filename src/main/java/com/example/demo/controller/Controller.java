@@ -39,58 +39,23 @@ public class Controller implements InitializingBean {
 
         image = image.replace("\"", "");
         image = image.replace("\\n", "");
-//        System.out.println(image);
+        System.out.println(image);
         if (image.isEmpty()) {
             return null;
         }
-
         byte originalImageByte[] = Base64.getDecoder().decode(image);
-
         InputStream inputStream = new ByteArrayInputStream(originalImageByte);
-
         BufferedImage original = ImageIO.read(inputStream);
         if (original == null) {
             return null;
         }
         BufferedImage resized = Utils.resizeImage(original, original.getType());
-
+        System.out.println(resized.getWidth()+","+resized.getHeight());
         byte resizedImageByte[] = ((DataBufferByte) resized.getRaster().getDataBuffer()).getData();
-//        long start = System.currentTimeMillis();
-
-//        if (tessBaseAPI.Init(resourcePath, "eng") != 0) {
-//            System.err.println("Could not initialize tesseract.");
-//            System.exit(1);
-//        }
-//        tessBaseAPI.SetImage(resizedImageByte,300,300,3,300*3);
-//        BytePointer r = tessBaseAPI.GetUTF8Text();
-//        System.out.println(r.getString()+"a");
-
+        System.out.println(resizedImageByte.length + "");
         List<Classifier.Recognition> results = apiModel.recognizeImage(resizedImageByte);
-//        for (int i = 0; i < results.size(); i++) {
-//            Classifier.Recognition result = results.get(i);
-//            result.setLocation(Utils.resized2original(resized, original, result.getLocation()));
-//        }
-//        long end = System.currentTimeMillis() - start;
-//        RectF rectF = results.get(0).getLocation();
-//        BufferedImage cropedImage = original.getSubimage((int) rectF.left, (int) rectF.top, (int) (rectF.right - rectF.left), (int) (rectF.bottom - rectF.top));
-//
-//        Mat cropedMat = Utils.BufferedImage2Mat(cropedImage);
-//        MatOfPoint mat = processing(cropedMat);
-
-//        BufferedImage processedImage = Utils.Mat2BufferedImage(mat);
-
         Gson gson = new Gson();
         return gson.toJson(results);
-
-//        System.out.println(end);
-//        return
-//        if (mat != null) {
-//            Contour contour = new Contour(rectF.left, rectF.top, mat.toList());
-//            return gson.toJson(contour);
-//        }else {
-//            return null;
-//        }
-
     }
 
     @PostMapping(value = "/file")
@@ -107,11 +72,6 @@ public class Controller implements InitializingBean {
         return gson.toJson(result);
     }
 
-//    @GetMapping(value = "/{id}")
-//    public String get(@PathVariable("id") String param) {
-//        return param;
-//    }
-
     @Override
     public void afterPropertiesSet() throws Exception {
 
@@ -121,18 +81,14 @@ public class Controller implements InitializingBean {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         StreamUtils.copy(modelStream, outputStream);
         model = outputStream.toByteArray();
-
         System.out.println(model.length + "");
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(labelUrl.openStream()));
-
+        BufferedReader in = new BufferedReader(new InputStreamReader(labelUrl.openStream()));
         String inputLine;
         while ((inputLine = in.readLine()) != null) {
             label.add(inputLine);
             System.out.println("Line : " + inputLine);
         }
         in.close();
-
         apiModel = TensorFlowObjectDetectionAPIModel.create(model, label, INPUT_SIZE);
     }
 

@@ -1,8 +1,11 @@
 package com.example.demo;
 
 
+import net.coobird.thumbnailator.Thumbnails;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Utils {
     public static BufferedImage resizeImage(BufferedImage originalImage, int type) {
@@ -11,6 +14,15 @@ public class Utils {
         g.drawImage(originalImage, 0, 0, 300, 300, null);
         g.dispose();
         return resizedImage;
+    }
+
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        try {
+            return Thumbnails.of(img).size(newW, newH).asBufferedImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 //
 //    public static BufferedImage Mat2BufferedImage(Mat matrix) throws IOException {
