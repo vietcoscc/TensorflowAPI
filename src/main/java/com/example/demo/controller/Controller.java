@@ -39,7 +39,7 @@ public class Controller implements InitializingBean {
 
         image = image.replace("\"", "");
         image = image.replace("\\n", "");
-        System.out.println(image);
+//        System.out.println(image);
         if (image.isEmpty()) {
             return null;
         }
