@@ -58,7 +58,7 @@ public class Controller implements InitializingBean {
             Classifier.Recognition result = results.get(i);
             RectF location = result.getLocation();
             result.setLocation(Utils.resized2original(resized, original, location));
-            if (result.getConfidence() >= 0.5) {
+            if (result.getConfidence() >= 0.1) {
                 Rectangle rectangle = Utils.rectF2Rectangle(location);
                 BufferedImage subImage = original.getSubimage(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
                 tessBaseAPI.Init(resourcePath, "eng");

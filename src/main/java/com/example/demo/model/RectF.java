@@ -21,8 +21,8 @@ public class RectF {
     }
 
     public String toString() {
-        return "RectF(" + left + ", " + top + ", "
-                + right + ", " + bottom + ")";
+        return "RectF[" + left + ", " + top + ", "
+                + right + ", " + bottom + "]";
     }
 
 
