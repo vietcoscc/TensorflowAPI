@@ -58,7 +58,7 @@ public class Controller implements InitializingBean {
             Classifier.Recognition result = results.get(i);
             RectF location = result.getLocation();
             result.setLocation(Utils.resized2original(resized, original, location));
-            if (result.getConfidence() >= 0.1) {
+            if (result.getConfidence() >= 0.5) {
                 Rectangle rectangle = Utils.rectF2Rectangle(location);
                 BufferedImage subImage = original.getSubimage(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
                 tessBaseAPI.Init(resourcePath, "eng");
@@ -73,12 +73,6 @@ public class Controller implements InitializingBean {
         System.out.println("Process time : " + end);
         Gson gson = new Gson();
         return gson.toJson(results);
-    }
-
-    @PostMapping(value = "/openalpr")
-    public String openalpr(@RequestPart MultipartFile multipartFile) {
-
-        return "";
     }
 
     @Override

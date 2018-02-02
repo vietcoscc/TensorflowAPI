@@ -6,9 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 
 public class ObjectDetectionApplication {
-//    static {
-//        OpenCV.loadShared();
-//    }
 
     public static void main(String[] args) {
         SpringApplication.run(ObjectDetectionApplication.class, args);

@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import org.tensorflow.Graph;
+import org.tensorflow.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class TensorFlowObjectDetectionAPIModel implements Classifier {
 
         d.inferenceInterface = new TensorFlowInferenceJavaInterface(graphDef);
 
-//        final Graph g = d.inferenceInterface.graph();
+        final Graph g = d.inferenceInterface.graph();
 
         d.inputName = "image_tensor";
 
@@ -70,22 +71,22 @@ public class TensorFlowObjectDetectionAPIModel implements Classifier {
         // H = W are the height and width
         // C is the number of channels (3 for our purposes - RGB)
 
-//        final Operation inputOp = g.operation(d.inputName);
-//        if (inputOp == null) {
-//            throw new RuntimeException("Failed to find input Node '" + d.inputName + "'");
-//        }
-//        final Operation outputOp1 = g.operation("detection_scores");
-//        if (outputOp1 == null) {
-//            throw new RuntimeException("Failed to find output Node 'detection_scores'");
-//        }
-//        final Operation outputOp2 = g.operation("detection_boxes");
-//        if (outputOp2 == null) {
-//            throw new RuntimeException("Failed to find output Node 'detection_boxes'");
-//        }
-//        final Operation outputOp3 = g.operation("detection_classes");
-//        if (outputOp3 == null) {
-//            throw new RuntimeException("Failed to find output Node 'detection_classes'");
-//        }
+        final Operation inputOp = g.operation(d.inputName);
+        if (inputOp == null) {
+            throw new RuntimeException("Failed to find input Node '" + d.inputName + "'");
+        }
+        final Operation outputOp1 = g.operation("detection_scores");
+        if (outputOp1 == null) {
+            throw new RuntimeException("Failed to find output Node 'detection_scores'");
+        }
+        final Operation outputOp2 = g.operation("detection_boxes");
+        if (outputOp2 == null) {
+            throw new RuntimeException("Failed to find output Node 'detection_boxes'");
+        }
+        final Operation outputOp3 = g.operation("detection_classes");
+        if (outputOp3 == null) {
+            throw new RuntimeException("Failed to find output Node 'detection_classes'");
+        }
 
         // Pre-allocate buffers.
 

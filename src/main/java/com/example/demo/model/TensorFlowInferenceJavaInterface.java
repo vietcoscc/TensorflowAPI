@@ -47,15 +47,15 @@ public class TensorFlowInferenceJavaInterface {
         this.addFeed(inputName, Tensor.create(DataType.UINT8, dims, ByteBuffer.wrap(src)));
     }
 
-//    public Graph graph() {
-//        return this.g;
-//    }
+    public Graph graph() {
+        return this.g;
+    }
 
     private void addFeed(String inputName, Tensor t) {
         TensorId tid = TensorId.parse(inputName);
         this.runner.feed(tid.name, tid.outputIndex, t);
-//        this.feedNames.add(inputName);
-//        this.feedTensors.add(t);
+        this.feedNames.add(inputName);
+        this.feedTensors.add(t);
     }
 
     public void run(String[] outputNames) {
