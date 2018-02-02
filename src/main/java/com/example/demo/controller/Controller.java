@@ -26,8 +26,8 @@ import java.util.List;
 
 @RestController
 public class Controller implements InitializingBean {
-    public static final String MODEL_NAME = "ssd_mobilenet_v1_android_export2.pb";
-    public static final String LABEL_NAME = "coco_labels_list2.txt";
+    public static final String MODEL_NAME = "ssd_mobilenet_v1_android_export.pb";
+    public static final String LABEL_NAME = "coco_labels_list.txt";
     public static final int INPUT_SIZE = 300;
 
     private String resourcePath = getClass().getClassLoader().getResource("").getPath() + "static/";
@@ -85,7 +85,7 @@ public class Controller implements InitializingBean {
         label = Files.readAllLines(labelPath);
         System.out.println(model.length + "");
         System.out.println(label.size() + "");
-//
+
 //        URL modelUrl = new URL("https://github.com/vietcoscc/TensorflowAPI/raw/master/src/main/resources/static/ssd_mobilenet_v1_android_export.pb");
 //        URL labelUrl = new URL("https://raw.githubusercontent.com/vietcoscc/TensorflowAPI/master/src/main/resources/static/coco_labels_list.txt");
 //
